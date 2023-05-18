@@ -1,17 +1,34 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, icons, images, SIZES } from '../constants';
 
 const Home = () => {
+
+  const handleLoginPress = () => {
+    // Handle login button press
+  };
+
+  const handleRegisterPress = () => {
+    // Handle register button press
+  };
+
   return (
     <View style={styles.container}>
-      <Image source={icons.whitehomecircle} 
-      style={styles.backgroundImage} resizeMode="cover" />
+      <View style={styles.backgroundContainer}>
+        <Image source={icons.whitehomecircle} style={styles.backgroundImage} resizeMode="cover" />
+      </View>
       <View style={styles.contentContainer}>
-        <Image source={icons.RevLogo} 
-        style={styles.logoImage} resizeMode="contain" />
-        <Text style={styles.title}>RevApp</Text>
+        <View style={styles.logoContainer}>
+          <Image source={icons.RevLogo} style={styles.logoImage} resizeMode="contain" />
+        </View>
+        <Text style={styles.title}>RevBand</Text>
         <Text style={styles.tagline}>Trust Your Gut!</Text>
+        <TouchableOpacity style={styles.button} onPress={handleLoginPress}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleRegisterPress}>
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -22,18 +39,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.revblue,
   },
+  backgroundContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 220,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
   backgroundImage: {
-    ...StyleSheet.absoluteFillObject,
-    zIndex: -1,
+    width: 500,
+    height: 1000,
   },
   contentContainer: {
-    flex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 40,
+  },
+  logoContainer: {
+    marginBottom: 50, // Adjust the value to increase or decrease the space between the logo and other components
   },
   logoImage: {
-    width: 150,
-    height: 150,
+    width: 200,
+    height: 200,
   },
   title: {
     fontSize: 24,
@@ -45,6 +79,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     marginBottom: 300,
+  },
+  button: {
+    width: 200,
+    height: 50,
+    backgroundColor: COLORS.white,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: COLORS.black,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
