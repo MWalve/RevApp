@@ -1,8 +1,17 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, icons, images, SIZES } from '../constants';
 
 const Home = () => {
+
+  const handleLoginPress = () => {
+    // Handle login button press
+  };
+
+  const handleRegisterPress = () => {
+    // Handle register button press
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.backgroundContainer}>
@@ -12,8 +21,14 @@ const Home = () => {
         <View style={styles.logoContainer}>
           <Image source={icons.RevLogo} style={styles.logoImage} resizeMode="contain" />
         </View>
-        <Text style={styles.title}>RevApp</Text>
+        <Text style={styles.title}>RevBand</Text>
         <Text style={styles.tagline}>Trust Your Gut!</Text>
+        <TouchableOpacity style={styles.button} onPress={handleLoginPress}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleRegisterPress}>
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -29,7 +44,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: 200,
+    bottom: 220,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
@@ -64,6 +79,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     marginBottom: 300,
+  },
+  button: {
+    width: 200,
+    height: 50,
+    backgroundColor: COLORS.white,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: COLORS.black,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
