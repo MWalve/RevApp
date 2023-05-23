@@ -1,6 +1,6 @@
-import WelcomePage from "./common/header/WelcomePage";
+import WelcomePage from "./common/Pages/WelcomePage/WelcomePage";
 
-// home screen
+/* // home screen
 import Welcome from "./home/welcome/Welcome";
 import Nearbyjobs from "./home/nearby/Nearbyjobs";
 import Popularjobs from "./home/popular/Popularjobs";
@@ -13,17 +13,8 @@ import { default as JobFooter } from "./jobdetails/footer/Footer";
 import Specifics from "./jobdetails/specifics/Specifics";
 
 // common
-import NearbyJobCard from "./common/cards/nearby/NearbyJobCard";
+import NearbyJobCard from "./common/cards/nearby/NearbyJobCard"; */
 
 export {
   WelcomePage,
-  Welcome,
-  Nearbyjobs,
-  Popularjobs,
-  Company,
-  JobTabs,
-  JobAbout,
-  JobFooter,
-  Specifics,
-  NearbyJobCard
 };
