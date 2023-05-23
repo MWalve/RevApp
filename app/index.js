@@ -1,8 +1,8 @@
 import React from 'react';
-import WelcomePage from '../components/common/Pages/WelcomePage/WelcomePage';
+import Navigator from '../routes/homeStack'
 
 const Home = () => {
-  return <WelcomePage />;
+  return <Navigator/>;
 };
 
 export default Home;
