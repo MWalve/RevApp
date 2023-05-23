@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { COLORS, icons }  from '../../../constants';
+import { COLORS, icons }  from '../../../../constants';
 
 const WelcomePage = () => {
 
