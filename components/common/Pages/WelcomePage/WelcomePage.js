@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, icons }  from '../../../../constants';
+import { useNavigation } from 'react-navigation';
 
 const WelcomePage = () => {
+  const navigation = useNavigation();
 
   const handleLoginPress = () => {
-    // Handle login button press
+    navigation.navigate('Dashboard');
   };
 
   const handleRegisterPress = () => {
