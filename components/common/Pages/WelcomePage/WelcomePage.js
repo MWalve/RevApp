@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, icons }  from '../../../../constants';
-import { useNavigation } from 'react-navigation';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { useNavigation } from 'expo-router';
 
 const WelcomePage = () => {
   const navigation = useNavigation();
-
   const handleLoginPress = () => {
     navigation.navigate('Dashboard');
   };
@@ -35,7 +36,6 @@ const WelcomePage = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
