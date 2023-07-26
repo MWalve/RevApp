@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 import { COLORS, icons } from '../../../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CenterFocusStrong } from '@mui/icons-material';
 
 const Dashboard = () => {
 
@@ -86,13 +85,14 @@ const styles = StyleSheet.create({
     quote: {
         fontSize: 18,
         fontStyle: 'italic',
-        position: 'relative',
         fontFamily: 'san-serif',
         paddingLeft: 50,
         paddingTop: 30,
+        textAlign: 'center',
+        color: COLORS.white,
     },
     quoteContainer: {
-        backgroundColor: '#ffffff',
+        backgroundColor: COLORS.revblue,
         borderRadius:40,
         padding: 10,
         marginTop: 10,
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 4,
         alignItems: 'center',
+        justifyContent: 'center',
     }
 })
 
