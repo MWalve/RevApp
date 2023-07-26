@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 import { COLORS, icons } from '../../../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CenterFocusStrong } from '@mui/icons-material';
 
 const Dashboard = () => {
 
@@ -53,21 +54,21 @@ const Dashboard = () => {
             <Text style={styles.title}>
                 Welcome User!
             </Text>
-            <Text style={styles.quote}>
-                {quote}
-            </Text>
+            <View style={styles.quoteContainer}>
+                <Text style={styles.quote}>
+                    {quote}
+                </Text>
+            </View>
         </View>
-        //Favorites Widget
-        //Gut Widget
-        // Mental Health Widgets
-        //Taskbar
+        //prognosis
+        //chatbot
     )
 };
 //styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.gray,
+        backgroundColor: COLORS.white,
     },
     title: {
         fontSize: 24,
@@ -89,6 +90,21 @@ const styles = StyleSheet.create({
         fontFamily: 'san-serif',
         paddingLeft: 50,
         paddingTop: 30,
+    },
+    quoteContainer: {
+        backgroundColor: '#ffffff',
+        borderRadius:40,
+        padding: 10,
+        marginTop: 10,
+        elevation: 5, // For shadow on Android
+        shadowColor: '#000000', // For shadow on iOS
+        shadowOffset: {
+        width: 0,
+        height: 0,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        alignItems: 'center',
     }
 })
 
