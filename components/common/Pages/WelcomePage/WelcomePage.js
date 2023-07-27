@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { COLORS, icons }  from '../../../../constants';
 import { useNavigation } from 'expo-router';
 import { registerUser, loginUser, createTables } from '../../../../utils/Database';
 import Modal from 'react-native-modal';
-import { useState, useEffect} from 'react';
 
 const WelcomePage = () => {
   useEffect(() => {
