@@ -22,7 +22,7 @@ const Dashboard = () => {
             '“The only bad workout is the one that didn’t happen.”',
             '“Someone busier than you is running right now.”',
             '“Working out is never convenient. But neither is illness, diabetes and obesity!”',
-            '"Exercise is king, nutrition is Queen, put them together, and youve got a kingdom."',
+            '"Exercise is king, nutrition is Queen, put them together, and you\'ve got a kingdom."',
         ]
 
         //Get the current date
