@@ -1,18 +1,35 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, icons }  from '../../../../constants';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
+import { registerUser, loginUser } from '../../../../utils/Database';
 
 const WelcomePage = () => {
   const navigation = useNavigation();
+
+
   const handleLoginPress = () => {
-    navigation.navigate('Dashboard');
+    // Call the loginUser function with the entered username and password
+    const username = 'entered_username';
+    const password = 'entered_password';
+    loginUser(
+      username,
+      password,
+      () => {
+        // Handle successful login (e.g., navigate to the Dashboard)
+        navigation.navigate('Dashboard');
+      },
+      () => {
+        // Handle login failure (e.g., show an error message)
+      }
+    );
   };
 
   const handleRegisterPress = () => {
-    // Handle register button press
+    // Call the registerUser function with the entered username and password
+    const username = 'new_username';
+    const password = 'new_password';
+    registerUser(username, password);
   };
 
   return (
