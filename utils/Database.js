@@ -57,3 +57,5 @@ export const registerUser = (username, password) => {
       );
     });
   };
+
+  export {db, createTables};
