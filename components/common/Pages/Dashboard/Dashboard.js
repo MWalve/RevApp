@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 import { COLORS, icons } from '../../../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import WelcomePage from '../WelcomePage/WelcomePage';
+
+
 
 const Dashboard = () => {
-
     const [quote, setQuote] = useState('');
 
     useEffect(() => {
@@ -51,7 +53,7 @@ const Dashboard = () => {
         <View style={styles.container}>
             <Image source={icons.menu} style={styles.hamburger}/>
             <Text style={styles.title}>
-                Welcome User!
+                Welcome {loginUsername}!
             </Text>
             <View style={styles.quoteContainer}>
                 <Text style={styles.quote}>
