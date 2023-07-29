@@ -13,10 +13,13 @@ const WelcomePage = () => {
   const navigation = useNavigation();
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [loginError, setLoginError] = useState(false);
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
+  
 
   const handleLoginPress = () => {
     setLoginModalVisible(true);
@@ -34,10 +37,11 @@ const WelcomePage = () => {
         // Handle successful login (e.g., navigate to the Dashboard)
         navigation.navigate('Dashboard');
         setLoginModalVisible(false);
+        setLoginError(false);
       },
       () => {
         // Handle login failure (e.g., show an error message)
-        setLoginModalVisible(false);
+        setLoginError(true);
       }
     );
   };
@@ -47,9 +51,11 @@ const WelcomePage = () => {
       registerUsername,
       registerPassword,
       () => {
-        // Handle successful registration (e.g., show a success message)
+        // Handle successful registration (e.g., show a success message and open the login modal)
+        setRegisterSuccess(true);
         setRegisterModalVisible(false);
-        alert('Registration successful!');
+        setLoginModalVisible(true); // Automatically open the login modal after successful registration
+        setTimeout(() => setRegisterSuccess(false), 3000); // Reset the success message after 3 seconds
       },
       () => {
         // Handle registration failure (e.g., show an error message)
@@ -91,6 +97,9 @@ const WelcomePage = () => {
               onChangeText={text => setLoginPassword(text)}
               secureTextEntry
             />
+            {loginError && (
+              <Text style={styles.errorText}>Incorrect username or password.</Text>
+            )}
             <TouchableOpacity style={styles.modalButton} onPress={handleLogin}>
               <Text style={styles.modalButtonText}>Login</Text>
             </TouchableOpacity>
@@ -118,6 +127,9 @@ const WelcomePage = () => {
               onChangeText={text => setRegisterPassword(text)}
               secureTextEntry
             />
+            {registerSuccess && (
+              <Text style={styles.successText}>Successfully registered! Please log in.</Text>
+            )}
             <TouchableOpacity style={styles.modalButton} onPress={handleRegister}>
               <Text style={styles.modalButtonText}>Register</Text>
             </TouchableOpacity>
@@ -223,6 +235,20 @@ const styles = StyleSheet.create({
   modalButtonText: {
     color: COLORS.white,
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  successText: {
+    color: 'green',
+    fontSize: 16,
+    marginTop: 10,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 16,
+    marginTop: 10,
+    textAlign: 'center',
     fontWeight: 'bold',
   },
 });
