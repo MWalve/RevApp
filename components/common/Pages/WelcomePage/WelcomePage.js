@@ -55,7 +55,7 @@ const WelcomePage = () => {
         setRegisterSuccess(true);
         setRegisterModalVisible(false);
         setLoginModalVisible(true); // Automatically open the login modal after successful registration
-        setTimeout(() => setRegisterSuccess(false), 3000); // Reset the success message after 3 seconds
+        setTimeout(() => setRegisterSuccess(false), 10000); // Reset the success message after 3 seconds
       },
       () => {
         // Handle registration failure (e.g., show an error message)
