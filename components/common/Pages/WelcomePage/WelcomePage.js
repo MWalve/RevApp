@@ -6,20 +6,6 @@ import { registerUser, loginUser, createTables } from '../../../../utils/Databas
 import Modal from 'react-native-modal';
 
 const WelcomePage = () => {
-  useEffect(() => {
-    createTables();
-  }, [])
-
-  const navigation = useNavigation();
-  const [loginModalVisible, setLoginModalVisible] = useState(false);
-  const [registerModalVisible, setRegisterModalVisible] = useState(false);
-  const [registerSuccess, setRegisterSuccess] = useState(false);
-  const [loginError, setLoginError] = useState(false);
-  const [loginUsername, setLoginUsername] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  const [registerUsername, setRegisterUsername] = useState('');
-  const [registerPassword, setRegisterPassword] = useState('');
-  
 
   const handleLoginPress = () => {
     setLoginModalVisible(true);

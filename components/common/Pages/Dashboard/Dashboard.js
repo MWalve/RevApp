@@ -2,10 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 import { COLORS, icons } from '../../../../constants';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import WelcomePage from '../WelcomePage/WelcomePage';
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Dashboard = () => {
     const [quote, setQuote] = useState('');
