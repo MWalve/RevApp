@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, icons }  from '../../../../constants';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 
 const WelcomePage = () => {
