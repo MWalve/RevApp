@@ -50,7 +50,7 @@ const Dashboard = () => {
         <View style={styles.container}>
             <Image source={icons.menu} style={styles.hamburger}/>
             <Text style={styles.title}>
-                Welcome {loginUsername}!
+                Welcome User!
             </Text>
             <View style={styles.quoteContainer}>
                 <Text style={styles.quote}>
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         color: 'black',
+        fontWeight: 'bold',
         marginBottom: 10,
         paddingTop: 5,
         paddingLeft: 10,
@@ -84,27 +85,20 @@ const styles = StyleSheet.create({
     quote: {
         fontSize: 18,
         fontStyle: 'italic',
-        fontFamily: 'san-serif',
-        paddingLeft: 50,
-        paddingTop: 30,
         textAlign: 'center',
-        color: COLORS.white,
+        color: COLORS.revblue,
+        fontWeight: 'bold',
     },
     quoteContainer: {
-        backgroundColor: COLORS.revblue,
-        borderRadius:40,
-        padding: 10,
+        backgroundColor: COLORS.white,
+        borderRadius:20,
+        padding: 5,
         marginTop: 10,
-        elevation: 5, // For shadow on Android
-        shadowColor: '#000000', // For shadow on iOS
-        shadowOffset: {
-        width: 0,
-        height: 0,
-        },
+        elevation: 10, // For shadow on Android
         shadowOpacity: 0.2,
         shadowRadius: 4,
-        alignItems: 'center',
-        justifyContent: 'center',
+        marginLeft: 20,
+        marginRight: 20,
     }
 })
 

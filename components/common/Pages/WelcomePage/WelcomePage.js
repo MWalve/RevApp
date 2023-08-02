@@ -49,36 +49,36 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   backgroundImage: {
-    width: 500,
+    width: 475,
     height: 1000,
   },
   contentContainer: {
     position: 'absolute',
-    top: 0,
+    top: 50,
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 30,
   },
   logoContainer: {
-    marginBottom: 50, // Adjust the value to increase or decrease the space between the logo and other components
+    marginBottom: 10, // Adjust the value to increase or decrease the space between the logo and other components
   },
   logoImage: {
     width: 200,
     height: 200,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     color: 'black',
-    marginBottom: 10,
   },
   tagline: {
     fontSize: 16,
-    color: 'black',
-    marginBottom: 300,
+    color: COLORS.skyblue,
+    fontWeight: 'bold',
+    marginBottom: 200,
   },
   button: {
     width: 200,
