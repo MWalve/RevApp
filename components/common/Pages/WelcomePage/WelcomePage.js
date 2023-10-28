@@ -13,6 +13,10 @@ const WelcomePage = () => {
     // Handle register button press
   };
 
+  const handleGuestPress = () => {
+    navigation.navigate('Dashboard');
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.backgroundContainer}>
@@ -29,6 +33,9 @@ const WelcomePage = () => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleRegisterPress}>
           <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button2} onPress={handleGuestPress}>
+          <Text style={styles.buttonText2}>Login as Guest</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -94,6 +101,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  button2: {
+    width: 200,
+    height: 25,
+    backgroundColor: COLORS.gray2,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  buttonText2: {
+    color: COLORS.revblue,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
 });
 
 export default WelcomePage;

@@ -59,9 +59,11 @@ const Dashboard = () => {
             </View>
         </View>
         //prognosis
+        //this should use retrieval augmented generation
         //chatbot
     )
 };
+
 //styles
 const styles = StyleSheet.create({
     container: {
