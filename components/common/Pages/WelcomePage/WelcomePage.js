@@ -1,24 +1,39 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React , { useState } from 'react';
+import { View, Image, Text, StyleSheet, TouchableOpacity, Modal, TextInput } from 'react-native';
 import { COLORS, icons }  from '../../../../constants';
 import { useNavigation } from 'expo-router';
+import { KeyboardAvoidingView } from 'react-native-web';
 
 const WelcomePage = () => {
   const navigation = useNavigation();
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   const handleLoginPress = () => {
-    navigation.navigate('Dashboard');
+    setIsLoginModalVisible(true);
   };
 
   const handleRegisterPress = () => {
-    // Handle register button press
+    setIsLoginModalVisible(true);
   };
 
   const handleGuestPress = () => {
     navigation.navigate('Dashboard');
   }
 
+  const handleModalClose = () => {
+    setIsLoginModalVisible(false);
+  };
+
+  const handleLogin = () => {
+    // You can handle the login action here, for example, by sending the name to your authentication service.
+    // Then, navigate to the dashboard.
+    navigation.navigate('Dashboard');
+  };
+
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <View style={styles.backgroundContainer}>
         <Image source={icons.whitehomecircle} style={styles.backgroundImage} resizeMode="cover" />
       </View>
@@ -38,9 +53,38 @@ const WelcomePage = () => {
           <Text style={styles.buttonText2}>Login as Guest</Text>
         </TouchableOpacity>
       </View>
-    </View>
+
+
+      <Modal visible = {isLoginModalVisible} animationType = 'slide' transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Login</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Username"
+              onChangeText={username}
+              value={setUsername}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              onChangeText={password}
+              value={setPassword}
+            />
+            <TouchableOpacity style={styles.modalButton} onPress={handleLogin}>
+              <Text style={styles.modalButtonText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.modalButton} onPress={handleModalClose}>
+              <Text style={styles.modalButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </KeyboardAvoidingView>
   );
 };
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -85,7 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.skyblue,
     fontWeight: 'bold',
-    marginBottom: 200,
+    marginBottom: 300,
   },
   button: {
     width: 200,
@@ -108,14 +152,54 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: 8,
   },
   buttonText2: {
     color: COLORS.revblue,
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: COLORS.white,
+    width: 300,
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  input: {
+    width: '100%',
+    height: 40,
+    borderColor: COLORS.gray2,
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+  modalButton: {
+    width: '100%',
+    height: 40,
+    backgroundColor: COLORS.revblue,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  modalButtonText: {
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: 'bold',
   },
-
 });
 
 export default WelcomePage;
