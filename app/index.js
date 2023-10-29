@@ -8,8 +8,8 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="RevBand" component={WelcomePage} />
-      <Stack.Screen name="Dashboard" component={Dashboard} />
+      <Stack.Screen options={{ headerShown: false }} name="RevBand" component={WelcomePage} />
+      <Stack.Screen options={{ headerShown: false }} name="Dashboard" component={Dashboard} />
     </Stack.Navigator>
   );
 };
