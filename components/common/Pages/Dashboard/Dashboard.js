@@ -64,44 +64,4 @@ const Dashboard = () => {
     )
 };
 
-//styles
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: COLORS.white,
-    },
-    title: {
-        fontSize: 24,
-        color: 'black',
-        fontWeight: 'bold',
-        marginBottom: 10,
-        paddingTop: 5,
-        paddingLeft: 10,
-    },
-    hamburger: {
-        position: 'absolute',
-        right: 10,
-        height: 40,
-        width: 30
-    },
-    quote: {
-        fontSize: 18,
-        fontStyle: 'italic',
-        textAlign: 'center',
-        color: COLORS.revblue,
-        fontWeight: 'bold',
-    },
-    quoteContainer: {
-        backgroundColor: COLORS.white,
-        borderRadius:20,
-        padding: 5,
-        marginTop: 10,
-        elevation: 10, // For shadow on Android
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        marginLeft: 20,
-        marginRight: 20,
-    }
-})
-
 export default Dashboard;
