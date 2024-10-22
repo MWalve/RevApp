@@ -9,25 +9,27 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.45.6",
     "@types/cors": "^2.8.17",
     "@types/node": "20.2.5",
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
-    "autoprefixer": "10.4.14",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "next": "13.4.4",
-    "pg": "^8.11.0",
-    "pg-hstore": "^2.3.4",
-    "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "sequelize": "^6.32.0",
-    "tailwindcss": "^3.3.2",
     "typescript": "5.0.4"
   },
   "devDependencies": {
-    "@types/express": "^5.0.0"
+    "@types/express": "^5.0.0",
+    "@types/node": "20.2.5",
+    "@types/react": "18.2.7",
+    "@types/react-dom": "18.2.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "typescript": "5.0.4"
   }
 }
