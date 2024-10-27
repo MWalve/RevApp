@@ -1,34 +1,27 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import type { Mood } from '../lib/supabase';
 
-const MoodList: React.FC = () => {
-  const [moodEntries, setMoodEntries] = useState<Mood[]>([]);
+interface MoodEntry {
+  id: number;
+  mood: number;
+  note: string;
+  created_at: string;
+}
+
+export default function MoodList() {
+  const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMoods = async () => {
-      const { data, error } = await supabase
-        .from('moods')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching moods:', error);
-        return;
-      }
-
-      setMoodEntries(data || []);
-    };
-
     fetchMoods();
 
     // Set up real-time subscription
-    const subscription = supabase
-      .channel('moods_changes')
+    const channel = supabase
+      .channel('mood-changes')
       .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'moods' }, 
+        { event: 'INSERT', schema: 'public', table: 'moods' }, 
         () => {
           fetchMoods();
         }
@@ -36,30 +29,57 @@ const MoodList: React.FC = () => {
       .subscribe();
 
     return () => {
-      subscription.unsubscribe();
+      supabase.removeChannel(channel);
     };
   }, []);
 
+  const fetchMoods = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('moods')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setMoodEntries(data || []);
+    } catch (error) {
+      console.error('Error fetching moods:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading mood history...</div>;
+  }
+
   return (
-    <div className="mt-8">
-      <h2 className="text-2xl font-bold mb-4">Mood History</h2>
-      <div className="space-y-4">
-        {moodEntries.map((entry) => (
-          <div key={entry.id} className="bg-white shadow rounded-lg p-4">
+    <div className="space-y-4">
+      {moodEntries.length === 0 ? (
+        <p className="text-gray-500 text-center">No mood entries yet.</p>
+      ) : (
+        moodEntries.map((entry) => (
+          <div key={entry.id} className="bg-white rounded-lg shadow p-4">
             <div className="flex justify-between items-center">
-              <span className="text-lg font-medium">Mood: {entry.mood}/10</span>
-              <span className="text-sm text-gray-500">
+              <div className="flex items-center space-x-2">
+                <span className="text-2xl">
+                  {entry.mood >= 8 ? '🤩' : 
+                   entry.mood >= 6 ? '😊' : 
+                   entry.mood >= 4 ? '😐' : 
+                   entry.mood >= 2 ? '😔' : '😢'}
+                </span>
+                <span className="font-medium">Mood: {entry.mood}/10</span>
+              </div>
+              <time className="text-sm text-gray-500">
                 {new Date(entry.created_at).toLocaleString()}
-              </span>
+              </time>
             </div>
             {entry.note && (
-              <p className="mt-2 text-gray-600">{entry.note}</p>
+              <p className="text-gray-600 mt-2">{entry.note}</p>
             )}
           </div>
-        ))}
-      </div>
+        ))
+      )}
     </div>
   );
-};
-
-export default MoodList;
+}

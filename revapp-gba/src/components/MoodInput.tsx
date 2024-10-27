@@ -1,70 +1,83 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 
-const MoodInput: React.FC = () => {
+export default function MoodInput() {
   const [mood, setMood] = useState(5);
   const [note, setNote] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('moods')
         .insert([
-          { mood, note }
-        ])
-        .select();
+          {
+            mood: mood,
+            note: note,
+            created_at: new Date().toISOString(),
+          }
+        ]);
 
       if (error) throw error;
 
-      alert('Mood saved successfully!');
+      alert('Mood logged successfully!');
       setMood(5);
       setNote('');
     } catch (error) {
-      console.error('Error saving mood:', error);
-      alert('Failed to save mood. Please try again.');
+      console.error('Error inserting mood:', error);
+      alert('Failed to log mood. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label htmlFor="mood" className="block text-sm font-medium">
-          Rate your mood (1-10):
+        <label className="block text-sm font-medium text-gray-700">
+          Rate your mood (1-10)
         </label>
         <input
           type="range"
-          id="mood"
           min="1"
           max="10"
           value={mood}
-          onChange={(e) => setMood(parseInt(e.target.value))}
-          className="w-full"
+          onChange={(e) => setMood(Number(e.target.value))}
+          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mt-2"
         />
-        <span className="block text-lg font-bold">{mood}</span>
+        <div className="text-center mt-2">
+          <span className="text-2xl">
+            {mood >= 8 ? '🤩' : mood >= 6 ? '😊' : mood >= 4 ? '😐' : mood >= 2 ? '😔' : '😢'}
+          </span>
+          <span className="ml-2 font-medium">{mood}/10</span>
+        </div>
       </div>
+
       <div>
-        <label htmlFor="note" className="block text-sm font-medium">
-          Add a note (optional):
+        <label className="block text-sm font-medium text-gray-700">
+          Add a note (optional)
         </label>
         <textarea
-          id="note"
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          className="w-full rounded-md border p-2"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           rows={3}
+          placeholder="How are you feeling today?"
         />
       </div>
+
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        disabled={loading}
+        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:opacity-50"
       >
-        Log Mood
+        {loading ? 'Saving...' : 'Save Mood'}
       </button>
     </form>
   );
-};
-
-export default MoodInput;
+}
