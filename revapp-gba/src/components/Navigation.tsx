@@ -24,7 +24,13 @@ const Navigation = () => {
             href="/mood-input"
             className={`text-white px-4 py-2 rounded transition-colors ${isActive('/mood-input')}`}
           >
-            Log Mood
+            Quick Log
+          </Link>
+          <Link 
+            href="/enhanced-mood"
+            className={`text-white px-4 py-2 rounded transition-colors ${isActive('/enhanced-mood')}`}
+          >
+            Detailed Log
           </Link>
           <Link 
             href="/mood-history"
