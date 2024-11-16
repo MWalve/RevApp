@@ -54,6 +54,12 @@ const Navigation = () => {
                 >
                   Food History
                 </Link>
+                <Link 
+                  href="/food-search-test"
+                  className={`text-white px-3 py-2 rounded transition-colors ${isActive('/food-search-test')}`}
+                >
+                  Test Food Search
+                </Link>
               </div>
 
               {/* History Section */}
