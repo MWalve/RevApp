@@ -18,73 +18,56 @@ const Navigation = () => {
             href="/" 
             className="text-white font-bold text-xl"
           >
-            Mood & Gut Tracker
+            Mind-Gut Wellness
           </Link>
           
-          {/* Main Navigation */}
           <div className="flex flex-wrap items-center gap-2">
+            {/* Track Section */}
             <div className="flex space-x-2">
-              {/* Mood Section */}
-              <div className="space-x-1">
-                <Link 
-                  href="/mood-input"
-                  className={`text-white px-3 py-2 rounded transition-colors ${isActive('/mood-input')}`}
-                >
-                  Quick Log
-                </Link>
-                <Link 
-                  href="/enhanced-mood"
-                  className={`text-white px-3 py-2 rounded transition-colors ${isActive('/enhanced-mood')}`}
-                >
-                  Detailed Log
-                </Link>
-              </div>
+              <Link 
+                href="/enhanced-mood"
+                className={`text-white px-3 py-2 rounded transition-colors ${isActive('/enhanced-mood')}`}
+              >
+                Track Mood
+              </Link>
+              <Link 
+                href="/food-log"
+                className={`text-white px-3 py-2 rounded transition-colors ${isActive('/food-log')}`}
+              >
+                Track Food
+              </Link>
+            </div>
 
-              {/* Food Section */}
-              <div className="space-x-1">
-                <Link 
-                  href="/food-log"
-                  className={`text-white px-3 py-2 rounded transition-colors ${isActive('/food-log')}`}
-                >
-                  Food Log
-                </Link>
-                <Link 
-                  href="/food-history"
-                  className={`text-white px-3 py-2 rounded transition-colors ${isActive('/food-history')}`}
-                >
-                  Food History
-                </Link>
-                <Link 
-                  href="/food-search-test"
-                  className={`text-white px-3 py-2 rounded transition-colors ${isActive('/food-search-test')}`}
-                >
-                  Test Food Search
-                </Link>
-              </div>
-
-              {/* History Section */}
+            {/* History Section */}
+            <div className="flex space-x-2">
+              <Link 
+                href="/food-history"
+                className={`text-white px-3 py-2 rounded transition-colors ${isActive('/food-history')}`}
+              >
+                Food Journal
+              </Link>
               <Link 
                 href="/mood-history"
                 className={`text-white px-3 py-2 rounded transition-colors ${isActive('/mood-history')}`}
               >
-                History
+                Mood History
               </Link>
             </div>
 
-            {/* Analysis/Dashboard Button */}
+            {/* Dashboard */}
             <Link 
               href="/dashboard"
               className={`bg-green-500 text-white px-3 py-2 rounded transition-colors hover:bg-green-600 ${
                 isActive('/dashboard') ? 'bg-green-600' : ''
               }`}
             >
-              Dashboard
+              Insights
             </Link>
           </div>
         </div>
       </div>
     </nav>
   );
-};
+}
 
 export default Navigation;
