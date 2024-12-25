@@ -54,6 +54,7 @@ const Navigation = () => {
               </Link>
             </div>
 
+            <div>
             {/* Dashboard */}
             <Link 
               href="/dashboard"
@@ -62,6 +63,15 @@ const Navigation = () => {
               }`}
             >
               Insights
+            </Link>
+            </div>
+            <Link 
+              href="/chat"
+              className={`text-white px-3 py-2 rounded transition-colors ${
+                pathname === '/chat' ? 'bg-blue-700' : 'hover:bg-blue-600'
+              }`}
+            >
+              AI Chat
             </Link>
           </div>
         </div>
