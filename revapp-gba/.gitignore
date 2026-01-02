@@ -34,3 +34,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ML models and databases (should not be in git)
+sentence_transformer_model/
+chroma_db/
+*.safetensors
+*.sqlite3
+*.bin
+__pycache__/
+*.pyc
