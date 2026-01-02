@@ -1,0 +1,103 @@
+# src/lib/rag_model.py
+from langchain_community.document_loaders import PyPDFLoader  # Fixed import
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_chroma import Chroma
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+import logging
+import os
+
+# Set up logging and paths
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+PDF_PATH = os.path.join(BASE_DIR, "foodAndMoodPaper.pdf")
+CHROMA_DIR = os.path.join(BASE_DIR, "chroma_db")
+
+class RAGSystem:
+    def __init__(self):
+        logger.info("Initializing RAG System...")
+        # Initialize embeddings first
+        self.embeddings = HuggingFaceEmbeddings(
+            model_name="sentence-transformers/all-distilroberta-v1",
+            model_kwargs={'device': 'cpu'}
+        )
+        logger.info("Embeddings loaded successfully")
+        
+        # Initialize text splitter
+        self.text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=200
+        )
+        
+        # Initialize vectorstore
+        self.load_or_create_vectorstore()
+
+    def load_or_create_vectorstore(self):
+        try:
+            if os.path.exists(CHROMA_DIR):
+                # Use existing vectorstore
+                self.vectorstore = Chroma(
+                    persist_directory=CHROMA_DIR,
+                    embedding_function=self.embeddings
+                )
+                collection = self.vectorstore._collection
+                doc_count = collection.count()
+                logger.info(f"Using existing vectorstore with {doc_count} documents")
+                
+                # If no documents, create new vectorstore
+                if doc_count == 0:
+                    logger.info("Empty vectorstore found, creating new one")
+                    self.load_documents()
+            else:
+                # Create new vectorstore
+                logger.info("Creating new vectorstore")
+                self.load_documents()
+        except Exception as e:
+            logger.error(f"Error loading/creating vectorstore: {e}")
+            raise
+
+    def load_documents(self):
+        try:
+            logger.info(f"Loading PDF from: {PDF_PATH}")
+            loader = PyPDFLoader(PDF_PATH)
+            pages = loader.load()
+            logger.info(f"Loaded {len(pages)} pages from PDF")
+
+            texts = self.text_splitter.split_documents(pages)
+            logger.info(f"Split into {len(texts)} chunks")
+
+            # Create vectorstore without persist method
+            self.vectorstore = Chroma.from_documents(
+                texts,
+                self.embeddings,
+                persist_directory=CHROMA_DIR
+            )
+            # No need to call persist() as it's handled automatically
+            logger.info("Created new vectorstore")
+        except Exception as e:
+            logger.error(f"Error loading documents: {e}")
+            raise
+
+    def get_insights(self, query, user_data=None):
+        logger.info(f"Processing query: {query}")
+        try:
+            # Get user's food and mood data
+            user_context = ""
+            if user_data:
+                user_context = "Based on your data:\n"
+                if user_data.get('moods'):
+                    user_context += f"Your recent moods: {self.format_mood_data(user_data['moods'])}\n"
+                if user_data.get('foods'):
+                    user_context += f"Your recent foods: {self.format_food_data(user_data['foods'])}\n"
+
+            # Get relevant research
+            relevant_docs = self.vectorstore.similarity_search(query, k=2)
+            research_context = ' '.join([doc.page_content for doc in relevant_docs])
+
+            # Combine personal data with research
+            response = f"{user_context}\n\nPersonalized insight: {research_context[:300]}..."
+            return response
+        except Exception as e:
+            logger.error(f"Error processing query: {e}")
+            return "An error occurred while processing your query."
