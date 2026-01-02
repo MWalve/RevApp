@@ -79,20 +79,25 @@ class RAGSystem:
             logger.error(f"Error loading documents: {e}")
             raise
 
-    def get_insights(self, query):
+    def get_insights(self, query, user_data=None):
         logger.info(f"Processing query: {query}")
         try:
-            relevant_docs = self.vectorstore.similarity_search(query, k=2)
-            logger.info(f"Found {len(relevant_docs)} relevant documents")
-            
-            if not relevant_docs:
-                return "I don't have enough information to answer that query."
+            # Get user's food and mood data
+            user_context = ""
+            if user_data:
+                user_context = "Based on your data:\n"
+                if user_data.get('moods'):
+                    user_context += f"Your recent moods: {self.format_mood_data(user_data['moods'])}\n"
+                if user_data.get('foods'):
+                    user_context += f"Your recent foods: {self.format_food_data(user_data['foods'])}\n"
 
-            context = ' '.join([doc.page_content for doc in relevant_docs])
-            response = f"Based on the research:\n{context[:500]}..."
-            
-            logger.info("Successfully generated response")
+            # Get relevant research
+            relevant_docs = self.vectorstore.similarity_search(query, k=2)
+            research_context = ' '.join([doc.page_content for doc in relevant_docs])
+
+            # Combine personal data with research
+            response = f"{user_context}\n\nPersonalized insight: {research_context[:300]}..."
             return response
         except Exception as e:
-            logger.error(f"Error generating insights: {e}")
-            return f"Sorry, I encountered an error processing your query: {str(e)}"
+            logger.error(f"Error processing query: {e}")
+            return "An error occurred while processing your query."
