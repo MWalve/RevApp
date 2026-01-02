@@ -3,7 +3,10 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import Navigation from '../../components/Navigation';
+import GutBrainChat from '@/components/GutBrainChat';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Dialog, DialogTrigger, DialogContent } from '@radix-ui/react-dialog';
+import { Button } from '../../components/Button'; // Adjust the import path as necessary
 
 interface CorrelationData {
   food_category: string;
@@ -106,7 +109,21 @@ export default function DashboardPage() {
             ))}
           </div>
         </div>
-
+                   {/* AI Chat Dialog */}
+           <div>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline">
+                  Ask AI Assistant
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-[800px] h-[600px]">
+                <div className="h-full">
+                  <GutBrainChat />
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
         {loading ? (
           <div className="text-center">Loading dashboard data...</div>
         ) : (
