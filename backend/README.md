@@ -18,6 +18,7 @@ Persistent Python backend for the gutSync RAG (Retrieval-Augmented Generation) s
 ### Install Ollama
 
 **Windows:**
+
 ```bash
 # Download from https://ollama.ai
 # Or using winget:
@@ -25,6 +26,7 @@ winget install Ollama.Ollama
 ```
 
 **macOS/Linux:**
+
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
 ```
@@ -45,6 +47,7 @@ ollama pull phi3
 ## Installation
 
 1. **Create virtual environment:**
+
 ```bash
 cd backend
 python -m venv venv
@@ -57,11 +60,13 @@ source venv/bin/activate
 ```
 
 2. **Install dependencies:**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 3. **Configure environment:**
+
 ```bash
 # Copy example env file
 cp env.example .env
@@ -102,11 +107,13 @@ docker run -p 8000:8000 gutsync-backend
 ## API Endpoints
 
 ### Health Check
+
 ```bash
 GET http://localhost:8000/health
 ```
 
 **Response:**
+
 ```json
 {
   "status": "healthy",
@@ -116,6 +123,7 @@ GET http://localhost:8000/health
 ```
 
 ### Query RAG System
+
 ```bash
 POST http://localhost:8000/query
 Content-Type: application/json
@@ -130,6 +138,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "response": "Based on research, sugar can have significant effects on mood...",
@@ -141,31 +150,35 @@ Content-Type: application/json
 
 Edit `.env` file to customize:
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `LLM_PROVIDER` | `ollama` | LLM provider (ollama, groq) |
-| `OLLAMA_MODEL` | `llama3.2` | Ollama model name |
-| `CHUNK_SIZE` | `1000` | Document chunk size |
-| `SIMILARITY_TOP_K` | `3` | Number of similar docs to retrieve |
+| Variable           | Default    | Description                        |
+| ------------------ | ---------- | ---------------------------------- |
+| `LLM_PROVIDER`     | `ollama`   | LLM provider (ollama, groq)        |
+| `OLLAMA_MODEL`     | `llama3.2` | Ollama model name                  |
+| `CHUNK_SIZE`       | `1000`     | Document chunk size                |
+| `SIMILARITY_TOP_K` | `3`        | Number of similar docs to retrieve |
 
 ## Switching LLM Providers
 
 ### Option 1: Ollama (Default - Local, Free)
+
 ```env
 LLM_PROVIDER=ollama
 OLLAMA_MODEL=llama3.2
 ```
 
 ### Option 2: Groq (Cloud, Free Tier)
+
 ```env
 LLM_PROVIDER=groq
 GROQ_API_KEY=your_key_here
 ```
+
 Get free API key at: https://console.groq.com
 
 ## Troubleshooting
 
 ### "Failed to connect to Ollama"
+
 ```bash
 # Make sure Ollama is running
 ollama serve
@@ -175,35 +188,40 @@ curl http://localhost:11434/api/tags
 ```
 
 ### "Model not found"
+
 ```bash
 # Pull the model
 ollama pull llama3.2
 ```
 
 ### Slow first request
+
 This is normal - the first request loads the LLM into memory (~5-10s). Subsequent requests are fast (~2-5s).
 
 ## Performance
 
-| Metric | Old (exec) | New (FastAPI) |
-|--------|-----------|---------------|
-| First request | ~60s | ~10s (model load) |
-| Subsequent | ~60s each | ~2-5s |
-| Memory | 0MB idle | ~2GB (persistent) |
+| Metric        | Old (exec) | New (FastAPI)     |
+| ------------- | ---------- | ----------------- |
+| First request | ~60s       | ~10s (model load) |
+| Subsequent    | ~60s each  | ~2-5s             |
+| Memory        | 0MB idle   | ~2GB (persistent) |
 
 ## Development
 
 ### Run tests
+
 ```bash
 pytest
 ```
 
 ### Code formatting
+
 ```bash
 black .
 ```
 
 ### Type checking
+
 ```bash
 mypy .
 ```
@@ -215,5 +233,3 @@ mypy .
 - [ ] Add user authentication
 - [ ] Add metrics/monitoring
 - [ ] Deploy to cloud (Railway, Render, Fly.io)
-
-

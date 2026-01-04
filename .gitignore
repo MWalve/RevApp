@@ -51,4 +51,6 @@ yarn-error.log*
 *.tmp
 *.temp
 
-
+# Markdown files
+TICKETS.md
+QUICKSTART.md
