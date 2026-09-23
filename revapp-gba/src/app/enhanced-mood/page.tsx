@@ -5,7 +5,7 @@ import EnhancedMoodInput from '../../components/EnhancedMoodInput';
 
 export default function EnhancedMoodPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Navigation />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Enhanced Mood Assessment</h1>

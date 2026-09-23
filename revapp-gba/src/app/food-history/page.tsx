@@ -5,7 +5,7 @@ import FoodHistory from '../../components/FoodHistory';
 
 export default function FoodHistoryPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Navigation />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Food History</h1>

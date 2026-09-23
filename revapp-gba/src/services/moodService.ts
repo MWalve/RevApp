@@ -189,6 +189,21 @@ export class MoodService {
   }
 
   /**
+   * Get the most recent enhanced mood entry, if any
+   */
+  static async getLatestMood(): Promise<EnhancedMoodEntry | null> {
+    const { data, error } = await supabase
+      .from('enhanced_mood_assessments')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) throw error;
+    return data;
+  }
+
+  /**
    * Delete a mood entry (basic or enhanced)
    */
   static async deleteMood(id: string | number, type: 'basic' | 'enhanced' = 'enhanced') {

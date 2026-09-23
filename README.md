@@ -88,7 +88,7 @@ A comprehensive health tracking application that helps users understand the conn
    BACKEND_URL=http://localhost:8000
    NEXT_PUBLIC_SUPABASE_URL=your_project_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-   NEXT_PUBLIC_USDA_API_KEY=your_usda_key
+   USDA_API_KEY=your_usda_key
    ```
 
 3. **Install Backend Dependencies**
@@ -184,7 +184,7 @@ cat > .env.local << EOF
 BACKEND_URL=http://localhost:8000
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
-NEXT_PUBLIC_USDA_API_KEY=your_usda_key
+USDA_API_KEY=your_usda_key
 EOF
 
 # Run development server
@@ -273,7 +273,7 @@ Edit `revapp-gba/.env.local`:
 BACKEND_URL=http://localhost:8000
 NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
-NEXT_PUBLIC_USDA_API_KEY=your_key
+USDA_API_KEY=your_key
 ```
 
 ## 🎯 Key Features

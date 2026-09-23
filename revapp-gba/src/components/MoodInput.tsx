@@ -39,7 +39,7 @@ export default function MoodInput() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-foreground">
           Rate your mood (1-10)
         </label>
         <input
@@ -48,7 +48,7 @@ export default function MoodInput() {
           max="10"
           value={mood}
           onChange={(e) => setMood(Number(e.target.value))}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mt-2"
+          className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer mt-2"
         />
         <div className="text-center mt-2">
           <span className="text-2xl">
@@ -59,13 +59,13 @@ export default function MoodInput() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-foreground">
           Add a note (optional)
         </label>
         <textarea
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-input shadow-sm focus:border-ring focus:ring-ring"
           rows={3}
           placeholder="How are you feeling today?"
         />
@@ -74,7 +74,7 @@ export default function MoodInput() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:opacity-50"
+        className="w-full bg-primary text-primary-foreground py-2 px-4 rounded-md hover:opacity-90 disabled:opacity-50"
       >
         {loading ? 'Saving...' : 'Save Mood'}
       </button>

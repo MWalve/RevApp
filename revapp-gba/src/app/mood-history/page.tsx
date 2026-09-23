@@ -5,7 +5,7 @@ import MoodList from '../../components/MoodList';
 
 export default function MoodHistoryPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Navigation />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Mood History</h1>

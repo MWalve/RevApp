@@ -72,7 +72,7 @@ export default function FoodInput() {
 
     try {
       const response = await fetch(
-        `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.NEXT_PUBLIC_USDA_API_KEY}&query=${encodeURIComponent(term)}&pageSize=10&dataType=Survey (FNDDS)`
+        `/api/food/search?query=${encodeURIComponent(term)}`
       );
 
       if (!response.ok) {
@@ -94,9 +94,7 @@ export default function FoodInput() {
     setError(null);
 
     try {
-      const response = await fetch(
-        `https://api.nal.usda.gov/fdc/v1/food/${fdcId}?api_key=${process.env.NEXT_PUBLIC_USDA_API_KEY}`
-      );
+      const response = await fetch(`/api/food/${encodeURIComponent(fdcId)}`);
 
       if (!response.ok) {
         throw new Error('Failed to fetch food details');
@@ -231,13 +229,13 @@ export default function FoodInput() {
   ];
 
   return (
-    <div className="space-y-6 bg-white p-6 rounded-lg shadow">
+    <div className="space-y-6 bg-card p-6 rounded-lg ring-1 ring-foreground/10">
       <h2 className="text-xl font-semibold">Log Food</h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Food Search */}
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-foreground">
             Search Food
           </label>
           <div className="relative">
@@ -248,12 +246,12 @@ export default function FoodInput() {
                 setSearchTerm(e.target.value);
                 searchFood(e.target.value);
               }}
-              className="w-full p-2 border rounded-md"
+              className="w-full p-2 border border-input bg-background rounded-md"
               placeholder="Start typing to search foods..."
             />
             {loading && (
               <div className="absolute right-2 top-2">
-                <span className="text-sm text-gray-500">Searching...</span>
+                <span className="text-sm text-muted-foreground">Searching...</span>
               </div>
             )}
           </div>
@@ -266,11 +264,11 @@ export default function FoodInput() {
                   type="button"
                   key={food.fdcId}
                   onClick={() => getFoodDetails(food.fdcId)}
-                  className="w-full p-4 text-left hover:bg-gray-50 border-b last:border-b-0"
+                  className="w-full p-4 text-left hover:bg-muted/50 border-b last:border-b-0"
                 >
                   <div className="font-medium">{food.description}</div>
                   {food.brandOwner && (
-                    <div className="text-sm text-gray-500">{food.brandOwner}</div>
+                    <div className="text-sm text-muted-foreground">{food.brandOwner}</div>
                   )}
                 </button>
               ))}
@@ -280,7 +278,7 @@ export default function FoodInput() {
 
         {/* Selected Food Details */}
         {selectedFood && (
-          <div className="border rounded-lg p-4 bg-gray-50">
+          <div className="border rounded-lg p-4 bg-muted/50">
             <h3 className="font-medium mb-3">{selectedFood.description}</h3>
             
             <div className="grid grid-cols-2 gap-4">
@@ -312,14 +310,14 @@ export default function FoodInput() {
           <>
             {/* Portion Size */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-foreground">
                 Portion Size
               </label>
               <input
                 type="text"
                 value={logEntry.portion_size}
                 onChange={(e) => setLogEntry(prev => ({ ...prev, portion_size: e.target.value }))}
-                className="mt-1 block w-full rounded-md border border-gray-300 p-2"
+                className="mt-1 block w-full rounded-md border border-input p-2"
                 placeholder="e.g., 1 cup, 100g"
                 required
               />
@@ -327,14 +325,14 @@ export default function FoodInput() {
 
             {/* Meal Type */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-foreground">
                 Meal Type
               </label>
               <select
                 aria-label="Meal Type"
                 value={logEntry.meal_type}
                 onChange={(e) => setLogEntry(prev => ({ ...prev, meal_type: e.target.value as any }))}
-                className="mt-1 block w-full rounded-md border border-gray-300 p-2"
+                className="mt-1 block w-full rounded-md border border-input p-2"
                 required
               >
                 <option value="breakfast">Breakfast</option>
@@ -346,13 +344,13 @@ export default function FoodInput() {
 
             {/* Notes */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-foreground">
                 Notes
               </label>
               <textarea
                 value={logEntry.notes}
                 onChange={(e) => setLogEntry(prev => ({ ...prev, notes: e.target.value }))}
-                className="mt-1 block w-full rounded-md border border-gray-300 p-2"
+                className="mt-1 block w-full rounded-md border border-input p-2"
                 rows={3}
                 placeholder="Add any notes about this meal..."
               />
@@ -362,7 +360,7 @@ export default function FoodInput() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:opacity-50"
+              className="w-full bg-primary text-primary-foreground py-2 px-4 rounded hover:opacity-90 disabled:opacity-50"
             >
               {loading ? 'Saving...' : 'Save Food Log'}
             </button>
@@ -372,14 +370,14 @@ export default function FoodInput() {
 
       {/* Error Message */}
       {error && (
-        <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
+        <div className="p-4 bg-destructive/10 border border-destructive/40 text-destructive rounded-md">
           {error}
         </div>
       )}
 
       {/* Success Message */}
       {success && (
-        <div className="p-4 bg-green-100 border border-green-400 text-green-700 rounded-md">
+        <div className="p-4 bg-accent/20 border border-accent/40 text-accent rounded-md">
           Food log saved successfully!
         </div>
       )}

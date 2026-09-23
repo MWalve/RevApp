@@ -2,75 +2,63 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { Sparkles, Brain, Utensils, BookOpen, History, LayoutDashboard, MessageCircle } from 'lucide-react';
+
+const NAV_LINKS = [
+  { href: '/enhanced-mood', label: 'Track Mood', icon: Brain },
+  { href: '/food-log', label: 'Track Food', icon: Utensils },
+  { href: '/food-history', label: 'Journal', icon: BookOpen },
+  { href: '/mood-history', label: 'History', icon: History },
+] as const;
 
 const Navigation = () => {
   const pathname = usePathname();
 
-  const isActive = (path: string) => {
-    return pathname === path ? 'bg-indigo-800' : 'hover:bg-indigo-800/50';
-  };
+  const linkClasses = (path: string) =>
+    cn(
+      'flex items-center gap-1.5 px-3 py-2 rounded-md text-sm font-medium transition-colors',
+      pathname === path
+        ? 'bg-secondary text-foreground'
+        : 'text-muted-foreground hover:bg-secondary/60 hover:text-foreground'
+    );
 
   return (
-    <nav className="bg-slate-900 border-b border-slate-800">
+    <nav className="bg-card border-b border-border">
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap items-center justify-between h-16">
-          <Link 
-            href="/" 
-            className="text-white font-bold text-xl"
-          >
+        <div className="flex flex-wrap items-center justify-between h-16 gap-2">
+          <Link href="/" className="flex items-center gap-2 font-bold text-lg text-foreground">
+            <Sparkles className="h-5 w-5 text-primary" />
             gutSync
           </Link>
-          
-          <div className="flex items-center gap-2">
-            {/* Track Section */}
-            <div className="flex space-x-1">
-              <Link 
-                href="/enhanced-mood"
-                className={`text-slate-200 px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive('/enhanced-mood')}`}
-              >
-                Track Mood
-              </Link>
-              <Link 
-                href="/food-log"
-                className={`text-slate-200 px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive('/food-log')}`}
-              >
-                Track Food
-              </Link>
-            </div>
 
-            {/* History Section */}
-            <div className="flex space-x-1">
-              <Link 
-                href="/food-history"
-                className={`text-slate-200 px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive('/food-history')}`}
-              >
-                Journal
+          <div className="flex items-center gap-1 flex-wrap">
+            {NAV_LINKS.map(({ href, label, icon: Icon }) => (
+              <Link key={href} href={href} className={linkClasses(href)}>
+                <Icon className="h-4 w-4" />
+                <span>{label}</span>
               </Link>
-              <Link 
-                href="/mood-history"
-                className={`text-slate-200 px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive('/mood-history')}`}
-              >
-                History
-              </Link>
-            </div>
+            ))}
 
-            <div>
-            {/* Dashboard */}
-            <Link 
+            <Link
               href="/dashboard"
-              className={`bg-emerald-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-emerald-700 ${
-                isActive('/dashboard') ? 'bg-emerald-700' : ''
-              }`}
+              className={cn(
+                'flex items-center gap-1.5 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-accent text-accent-foreground hover:opacity-90',
+                pathname === '/dashboard' && 'ring-2 ring-ring'
+              )}
             >
+              <LayoutDashboard className="h-4 w-4" />
               Insights
             </Link>
-            </div>
-            <Link 
+
+            <Link
               href="/chat"
-              className={`text-white px-3 py-2 rounded transition-colors ${
-                pathname === '/chat' ? 'bg-blue-700' : 'hover:bg-blue-600'
-              }`}
+              className={cn(
+                'flex items-center gap-1.5 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground hover:opacity-90',
+                pathname === '/chat' && 'ring-2 ring-ring'
+              )}
             >
+              <MessageCircle className="h-4 w-4" />
               AI Chat
             </Link>
           </div>

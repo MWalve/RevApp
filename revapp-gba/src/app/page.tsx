@@ -1,87 +1,164 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { Brain, Utensils, BarChart3, BookOpen, Sparkles, Heart } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MoodService, type EnhancedMoodEntry } from '@/services/moodService';
+import { FoodService } from '@/services/foodService';
+
+interface TodayOverview {
+  lastMood: EnhancedMoodEntry | null;
+  lastMealType: string | null;
+  entriesToday: number;
+}
+
+const MOOD_EMOJI = ['😞', '😕', '😐', '🙂', '😊'];
+
+function moodToEmoji(score?: number) {
+  if (!score) return '—';
+  const index = Math.min(4, Math.max(0, Math.round((score / 10) * 4)));
+  return MOOD_EMOJI[index];
+}
 
 export default function Home() {
+  const [overview, setOverview] = useState<TodayOverview | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadOverview() {
+      try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        const [lastMood, moodStats, foodSummary] = await Promise.all([
+          MoodService.getLatestMood(),
+          MoodService.getMoodStats(today, tomorrow),
+          FoodService.getTodaySummary(),
+        ]);
+
+        setOverview({
+          lastMood,
+          lastMealType: foodSummary.logs[0]?.meal_type ?? null,
+          entriesToday: moodStats.count + foodSummary.totalMeals,
+        });
+      } catch (err) {
+        console.error('Failed to load today overview:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadOverview();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-900 to-slate-900">
+    <div className="min-h-screen">
       <main className="container mx-auto px-4 py-16">
-        <div className="text-center text-white mb-12">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-primary mb-3">
+            <Sparkles className="h-5 w-5" />
+            <span className="text-sm font-medium uppercase tracking-wide">gutSync</span>
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            gutSync
+            Connect your mind and body
           </h1>
-          <p className="text-lg text-slate-300">
-            Connect your mind and body through mindful tracking
+          <p className="text-lg text-muted-foreground">
+            Track mood, food, and symptoms to understand your gut-brain connection.
           </p>
         </div>
 
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Track Entry Card */}
-          <div className="bg-slate-800/50 backdrop-blur-lg rounded-lg border border-slate-700 p-6 hover:border-indigo-500/50 transition-all">
-            <h2 className="text-2xl font-semibold mb-4 text-white">Track Your Day</h2>
-            <div className="space-y-4">
-              <Link 
+          <Card>
+            <CardHeader>
+              <CardTitle>Track Your Day</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Link
                 href="/enhanced-mood"
-                className="block w-full bg-indigo-600 text-white py-3 px-4 rounded-lg text-center hover:bg-indigo-700 transition-colors"
+                className="flex items-center gap-2 w-full bg-primary text-primary-foreground py-3 px-4 rounded-lg justify-center hover:opacity-90 transition-opacity"
               >
-                🧠 Log Mood & Symptoms
+                <Brain className="h-4 w-4" />
+                Log Mood & Symptoms
               </Link>
-              <Link 
+              <Link
                 href="/food-log"
-                className="block w-full bg-emerald-600 text-white py-3 px-4 rounded-lg text-center hover:bg-emerald-700 transition-colors"
+                className="flex items-center gap-2 w-full bg-accent text-accent-foreground py-3 px-4 rounded-lg justify-center hover:opacity-90 transition-opacity"
               >
-                🍽️ Log Meal or Snack
+                <Utensils className="h-4 w-4" />
+                Log Meal or Snack
               </Link>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          {/* View History Card */}
-          <div className="bg-slate-800/50 backdrop-blur-lg rounded-lg border border-slate-700 p-6 hover:border-indigo-500/50 transition-all">
-            <h2 className="text-2xl font-semibold mb-4 text-white">View Insights</h2>
-            <div className="space-y-4">
-              <Link 
+          <Card>
+            <CardHeader>
+              <CardTitle>View Insights</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Link
                 href="/mood-history"
-                className="block w-full bg-violet-600 text-white py-3 px-4 rounded-lg text-center hover:bg-violet-700 transition-colors"
+                className="flex items-center gap-2 w-full bg-secondary text-secondary-foreground py-3 px-4 rounded-lg justify-center hover:opacity-90 transition-opacity"
               >
-                📊 Mood History
+                <BarChart3 className="h-4 w-4" />
+                Mood History
               </Link>
-              <Link 
+              <Link
                 href="/food-history"
-                className="block w-full bg-amber-600 text-white py-3 px-4 rounded-lg text-center hover:bg-amber-700 transition-colors"
+                className="flex items-center gap-2 w-full bg-secondary text-secondary-foreground py-3 px-4 rounded-lg justify-center hover:opacity-90 transition-opacity"
               >
-                📝 Food Journal
+                <BookOpen className="h-4 w-4" />
+                Food Journal
               </Link>
-              <Link 
+              <Link
                 href="/dashboard"
-                className="block w-full bg-cyan-600 text-white py-3 px-4 rounded-lg text-center hover:bg-cyan-700 transition-colors"
+                className="flex items-center gap-2 w-full bg-secondary text-secondary-foreground py-3 px-4 rounded-lg justify-center hover:opacity-90 transition-opacity"
               >
-                🔍 Analysis Dashboard
+                <Heart className="h-4 w-4" />
+                Analysis Dashboard
               </Link>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          {/* Quick Stats Preview */}
-          <div className="md:col-span-2 bg-slate-800/50 backdrop-blur-lg rounded-lg border border-slate-700 p-6 hover:border-indigo-500/50 transition-all">
-            <h2 className="text-2xl font-semibold mb-4 text-white">Today's Overview</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="text-center p-4 bg-slate-900/50 rounded-lg border border-slate-700">
-                <div className="text-sm text-slate-400">Last Mood</div>
-                <div className="text-2xl font-semibold text-white">😊</div>
+          <Card className="md:col-span-2">
+            <CardHeader>
+              <CardTitle>Today's Overview</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="text-center p-4 bg-muted/50 rounded-lg border border-border">
+                  <div className="text-sm text-muted-foreground">Last Mood</div>
+                  <div className="text-2xl font-semibold mt-1">
+                    {loading ? '…' : moodToEmoji(overview?.lastMood?.overall_mood)}
+                  </div>
+                </div>
+                <div className="text-center p-4 bg-muted/50 rounded-lg border border-border">
+                  <div className="text-sm text-muted-foreground">Last Meal</div>
+                  <div className="text-lg font-semibold mt-1 capitalize">
+                    {loading ? '…' : overview?.lastMealType ?? 'None yet'}
+                  </div>
+                </div>
+                <div className="text-center p-4 bg-muted/50 rounded-lg border border-border">
+                  <div className="text-sm text-muted-foreground">Digestive Comfort</div>
+                  <div className="text-2xl font-semibold mt-1">
+                    {loading
+                      ? '…'
+                      : overview?.lastMood?.digestive_comfort
+                        ? `${overview.lastMood.digestive_comfort}/10`
+                        : '—'}
+                  </div>
+                </div>
+                <div className="text-center p-4 bg-muted/50 rounded-lg border border-border">
+                  <div className="text-sm text-muted-foreground">Entries Today</div>
+                  <div className="text-2xl font-semibold mt-1">
+                    {loading ? '…' : overview?.entriesToday ?? 0}
+                  </div>
+                </div>
               </div>
-              <div className="text-center p-4 bg-slate-900/50 rounded-lg border border-slate-700">
-                <div className="text-sm text-slate-400">Last Meal</div>
-                <div className="text-2xl font-semibold text-white">🍽️</div>
-              </div>
-              <div className="text-center p-4 bg-slate-900/50 rounded-lg border border-slate-700">
-                <div className="text-sm text-slate-400">Gut Health</div>
-                <div className="text-2xl font-semibold text-white">💚</div>
-              </div>
-              <div className="text-center p-4 bg-slate-900/50 rounded-lg border border-slate-700">
-                <div className="text-sm text-slate-400">Entries Today</div>
-                <div className="text-2xl font-semibold text-white">3</div>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>

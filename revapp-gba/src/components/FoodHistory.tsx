@@ -87,7 +87,7 @@ export default function FoodHistory() {
       )}
 
       {error && (
-        <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
+        <div className="p-4 bg-destructive/10 border border-destructive/40 text-destructive rounded-md">
           <p className="font-bold">Error loading food history:</p>
           <p>{error}</p>
         </div>
@@ -97,13 +97,13 @@ export default function FoodHistory() {
         {foodLogs.map((log) => {
           const foodItem = foodItems[log.food_item_id];
           return (
-            <div key={log.id} className="bg-white p-6 rounded-lg shadow">
+            <div key={log.id} className="bg-card p-6 rounded-lg ring-1 ring-foreground/10">
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="font-medium text-lg">
                     {foodItem?.name || 'Unknown Food Item'}
                   </h3>
-                  <div className="mt-2 text-sm text-gray-600">
+                  <div className="mt-2 text-sm text-muted-foreground">
                     <p>Portion: {log.portion_size}</p>
                     <p>Meal: {log.meal_type.charAt(0).toUpperCase() + log.meal_type.slice(1)}</p>
                     {log.notes && <p>Notes: {log.notes}</p>}
@@ -118,7 +118,7 @@ export default function FoodHistory() {
                             {foodItem.nutrition_data.categories.map((category, index) => (
                               <span 
                                 key={index}
-                                className="inline-block px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800"
+                                className="inline-block px-2 py-1 rounded-full text-xs bg-accent/20 text-accent"
                               >
                                 {category.replace('_', ' ')}
                               </span>
@@ -129,7 +129,7 @@ export default function FoodHistory() {
                     </div>
                   )}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-muted-foreground">
                   {new Date(log.consumed_at).toLocaleString()}
                 </div>
               </div>
@@ -138,24 +138,25 @@ export default function FoodHistory() {
         })}
 
         {!loading && foodLogs.length === 0 && (
-          <div className="text-center py-6 text-gray-500">
+          <div className="text-center py-6 text-muted-foreground">
             No food logs found.
           </div>
         )}
       </div>
 
-      {/* Debug Information */}
-      <div className="mt-8 p-4 bg-gray-100 rounded-md text-sm">
-        <h3 className="font-bold mb-2">Debug Information:</h3>
-        <pre className="overflow-auto">
-          {JSON.stringify({
-            totalLogs: foodLogs.length,
-            totalFoodItems: Object.keys(foodItems).length,
-            loading,
-            error
-          }, null, 2)}
-        </pre>
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className="mt-8 p-4 bg-muted rounded-md text-sm">
+          <h3 className="font-bold mb-2">Debug Information:</h3>
+          <pre className="overflow-auto">
+            {JSON.stringify({
+              totalLogs: foodLogs.length,
+              totalFoodItems: Object.keys(foodItems).length,
+              loading,
+              error
+            }, null, 2)}
+          </pre>
+        </div>
+      )}
     </div>
   );
 }

@@ -35,7 +35,7 @@ services:
       - BACKEND_URL=http://backend:8000
       - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
       - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
-      - NEXT_PUBLIC_USDA_API_KEY=${NEXT_PUBLIC_USDA_API_KEY}
+      - USDA_API_KEY=${USDA_API_KEY}
     depends_on:
       backend:
         condition: service_healthy

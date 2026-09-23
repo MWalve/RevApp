@@ -160,10 +160,10 @@ export default function EnhancedMoodInput() {
 
 
  return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-card p-6 rounded-lg ring-1 ring-foreground/10">
       {/* Time of Day Selection */}
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700">Time of Day</label>
+        <label className="block text-sm font-medium text-foreground">Time of Day</label>
         <div className="flex flex-wrap gap-2">
           {TIME_OPTIONS.map(({ value, label }) => (
             <button
@@ -172,8 +172,8 @@ export default function EnhancedMoodInput() {
               onClick={() => setMoodData(prev => ({ ...prev, time_of_day: value }))}
               className={`px-4 py-2 rounded-full text-sm transition-colors ${
                 moodData.time_of_day === value
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted hover:bg-muted text-foreground'
               }`}
             >
               {label}
@@ -186,7 +186,7 @@ export default function EnhancedMoodInput() {
       {/* Mood Metrics */}
       {MOOD_METRICS.map(({ id, label, icon, description }) => (
         <div key={id} className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-foreground">
             {icon} {label}
           </label>
           <div className="flex items-center gap-4">
@@ -199,7 +199,7 @@ export default function EnhancedMoodInput() {
                 ...prev,
                 [id]: parseInt(e.target.value)
               }))}
-              className="flex-grow h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              className="flex-grow h-2 bg-muted rounded-lg appearance-none cursor-pointer"
             />
             <span className="text-sm font-medium w-16 text-center">
               {moodData[id as keyof MoodData]}/10
@@ -210,7 +210,7 @@ export default function EnhancedMoodInput() {
 
       {/* Symptoms */}
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700">Symptoms</label>
+        <label className="block text-sm font-medium text-foreground">Symptoms</label>
         <div className="flex flex-wrap gap-2">
           {symptoms.map(symptom => (
             <button
@@ -219,8 +219,8 @@ export default function EnhancedMoodInput() {
               onClick={() => toggleSymptom(symptom.id)}
               className={`px-3 py-1 rounded-full text-sm ${
                 moodData.selectedSymptoms.includes(symptom.id)
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted hover:bg-muted text-foreground'
               }`}
             >
               {symptom.name}
@@ -231,24 +231,24 @@ export default function EnhancedMoodInput() {
 
       {/* Notes */}
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700">Additional Notes</label>
+        <label className="block text-sm font-medium text-foreground">Additional Notes</label>
         <textarea
           value={moodData.notes}
           onChange={(e) => setMoodData(prev => ({ ...prev, notes: e.target.value }))}
           placeholder="Any additional notes about how you're feeling..."
-          className="w-full h-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full h-24 px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>
 
       {/* Error and Success Messages */}
       {error && (
-        <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+        <div className="p-3 bg-destructive/10 border border-destructive/40 text-destructive rounded">
           {error}
         </div>
       )}
       
       {success && (
-        <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+        <div className="p-3 bg-accent/20 border border-accent/40 text-accent rounded">
           Mood assessment saved successfully!
         </div>
       )}
@@ -257,7 +257,7 @@ export default function EnhancedMoodInput() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 disabled:opacity-50 transition-colors"
+        className="w-full bg-primary text-primary-foreground py-3 rounded-md hover:opacity-90 disabled:opacity-50 transition-colors"
       >
         {loading ? 'Saving...' : 'Save Assessment'}
       </button>

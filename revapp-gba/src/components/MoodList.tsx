@@ -138,10 +138,10 @@ export default function MoodList() {
   return (
     <div className="space-y-4">
       {moodEntries.length === 0 ? (
-        <p className="text-gray-500 text-center">No mood entries yet.</p>
+        <p className="text-muted-foreground text-center">No mood entries yet.</p>
       ) : (
         moodEntries.map((entry) => (
-          <div key={entry.id} className="bg-white rounded-lg shadow p-4">
+          <div key={entry.id} className="bg-card rounded-lg shadow p-4">
             <div className="flex justify-between items-start">
               <div>
                 <div className="flex items-center space-x-2">
@@ -153,7 +153,7 @@ export default function MoodList() {
                   ) : (
                     <div className="space-y-1">
                       <span className="font-medium">Overall Mood: {entry.overall_mood}/10</span>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-muted-foreground">
                         <div>Anxiety: {entry.anxiety_level}/10</div>
                         <div>Energy: {entry.energy_level}/10</div>
                         <div>Mental Clarity: {entry.mental_clarity}/10</div>
@@ -169,7 +169,7 @@ export default function MoodList() {
                       {entry.symptoms.map((symptom, index) => (
                         <span 
                           key={index}
-                          className="inline-block bg-gray-100 rounded-full px-2 py-1 text-xs"
+                          className="inline-block bg-muted rounded-full px-2 py-1 text-xs"
                         >
                           {symptom.name}
                         </span>
@@ -179,18 +179,18 @@ export default function MoodList() {
                 )}
               </div>
               <div className="text-right">
-                <time className="text-sm text-gray-500">
+                <time className="text-sm text-muted-foreground">
                   {new Date(entry.created_at).toLocaleString()}
                 </time>
                 {entry.time_of_day && (
-                  <div className="text-sm text-gray-500 mt-1">
+                  <div className="text-sm text-muted-foreground mt-1">
                     {entry.time_of_day}
                   </div>
                 )}
               </div>
             </div>
             {(entry.note || entry.notes) && (
-              <p className="text-gray-600 mt-2">{entry.note || entry.notes}</p>
+              <p className="text-muted-foreground mt-2">{entry.note || entry.notes}</p>
             )}
           </div>
         ))
