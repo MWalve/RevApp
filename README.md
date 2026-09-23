@@ -84,7 +84,7 @@ A comprehensive health tracking application that helps users understand the conn
 2. **Configure Environment Variables**
 
    ```bash
-   # Create revapp-gba/.env.local with:
+   # Create .env.local (repo root) with:
    BACKEND_URL=http://localhost:8000
    NEXT_PUBLIC_SUPABASE_URL=your_project_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
@@ -173,9 +173,7 @@ Backend will be available at: http://localhost:8000
 ### 3. Frontend Setup
 
 ```bash
-# Navigate to frontend
-cd revapp-gba
-
+# From the repo root
 # Install dependencies
 npm install
 
@@ -227,20 +225,20 @@ RevApp/
 │   ├── Dockerfile          # Backend container
 │   └── README.md           # Backend documentation
 │
-├── revapp-gba/             # Next.js Frontend
-│   ├── src/
-│   │   ├── app/            # Next.js 14 App Router
-│   │   │   ├── api/        # API routes
-│   │   │   │   └── chat/   # RAG chat endpoint
-│   │   │   ├── chat/       # Chat page
-│   │   │   ├── dashboard/  # Analytics dashboard
-│   │   │   └── ...
-│   │   ├── components/     # React components
-│   │   └── lib/            # Utilities (Supabase client)
-│   ├── chroma_db/          # Vector database (gitignored)
-│   ├── foodAndMoodPaper.pdf # Research document
-│   ├── Dockerfile          # Frontend container
-│   └── package.json
+├── src/                     # Next.js Frontend
+│   ├── app/                # Next.js App Router
+│   │   ├── api/            # API routes
+│   │   │   ├── chat/       # RAG chat endpoint
+│   │   │   └── food/       # USDA food search proxy
+│   │   ├── chat/           # Chat page
+│   │   ├── dashboard/      # Analytics dashboard
+│   │   └── ...
+│   ├── components/         # React components
+│   └── lib/                # Utilities (Supabase client)
+├── chroma_db/               # Vector database (gitignored)
+├── foodAndMoodPaper.pdf     # Research document
+├── Dockerfile                # Frontend container
+├── package.json
 │
 ├── docker-compose.yml      # Orchestrate both services
 └── README.md               # This file
@@ -267,7 +265,7 @@ GROQ_API_KEY=your_key        # Get from console.groq.com
 
 ### Frontend Configuration
 
-Edit `revapp-gba/.env.local`:
+Edit `.env.local` (repo root):
 
 ```env
 BACKEND_URL=http://localhost:8000
@@ -314,8 +312,7 @@ The new architecture addresses critical security issues:
 cd backend
 pytest
 
-# Frontend tests
-cd revapp-gba
+# Frontend tests (from repo root)
 npm test
 ```
 
@@ -365,8 +362,8 @@ railway login
 cd backend
 railway up
 
-# Deploy frontend
-cd ../revapp-gba
+# Deploy frontend (from repo root)
+cd ..
 railway up
 ```
 

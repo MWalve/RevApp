@@ -26,7 +26,7 @@ Start-Sleep -Seconds 5
 
 # Start Frontend
 Write-Host "⚛️  Starting Next.js Frontend..." -ForegroundColor Cyan
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd revapp-gba; npm run dev"
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "npm run dev"
 
 Write-Host ""
 Write-Host "✅ Development servers starting..." -ForegroundColor Green

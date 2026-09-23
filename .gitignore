@@ -13,16 +13,24 @@ backend/.Python
 backend/pip-log.txt
 backend/.pytest_cache/
 backend/.mypy_cache/
+src/lib/__pycache__/
+*.pyc
 
 # Node.js
-revapp-gba/node_modules/
-revapp-gba/.next/
-revapp-gba/out/
-revapp-gba/.cache/
+/node_modules
+/.next/
+/out/
+/.cache/
+/coverage
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+*.tsbuildinfo
+next-env.d.ts
 
 # ML Models and Data (too large for git)
-revapp-gba/sentence_transformer_model/
-revapp-gba/chroma_db/
+sentence_transformer_model/
+chroma_db/
 *.safetensors
 *.bin
 *.sqlite3
@@ -37,6 +45,7 @@ revapp-gba/chroma_db/
 # OS
 .DS_Store
 Thumbs.db
+*.pem
 
 # Logs
 *.log
@@ -46,6 +55,9 @@ yarn-error.log*
 
 # Docker
 *.env.docker
+
+# Vercel
+.vercel
 
 # Temporary files
 *.tmp

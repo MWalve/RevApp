@@ -26,7 +26,7 @@ sleep 5
 
 # Start Frontend
 echo "⚛️  Starting Next.js Frontend..."
-osascript -e 'tell application "Terminal" to do script "cd '"$PWD"'/revapp-gba && npm run dev"' &
+osascript -e 'tell application "Terminal" to do script "cd '"$PWD"' && npm run dev"' &
 
 echo ""
 echo "✅ Development servers starting..."

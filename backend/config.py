@@ -43,8 +43,8 @@ class Settings(BaseSettings):
     
     # Paths
     BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    PDF_PATH: str = os.path.join(BASE_DIR, "revapp-gba", "foodAndMoodPaper.pdf")
-    CHROMA_DIR: str = os.path.join(BASE_DIR, "revapp-gba", "chroma_db")
+    PDF_PATH: str = os.path.join(BASE_DIR, "foodAndMoodPaper.pdf")
+    CHROMA_DIR: str = os.path.join(BASE_DIR, "chroma_db")
     
     # Supabase (for future user data integration)
     SUPABASE_URL: str = ""
